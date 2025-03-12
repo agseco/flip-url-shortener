@@ -10,7 +10,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
+    val jUnitVersion = "5.12.0"
+
+    testImplementation(platform("org.junit:junit-bom:$jUnitVersion"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.test {
