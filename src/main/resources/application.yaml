@@ -1,0 +1,6 @@
+ktor:
+  application:
+    modules:
+      - com.flip.urlshortener.AppKt.module
+  deployment:
+    port: 8080
