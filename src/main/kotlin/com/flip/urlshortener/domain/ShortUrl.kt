@@ -1,6 +1,6 @@
 package com.flip.urlshortener.domain
 
-import java.net.URI
+import com.flip.urlshortener.asUrl
 import java.net.URL
 import kotlin.math.pow
 
@@ -10,7 +10,7 @@ class ShortUrl(
 ) {
     val shortId: ShortId = id.asShortId()
 
-    fun shortUrl(): URL = URI.create("http://localhost:8080/${shortId.value}").toURL()
+    fun shortUrl(): URL = "http://localhost:8080/${shortId.value}".asUrl()
 
     @JvmInline
     value class Id(val value: Long) {
@@ -34,7 +34,11 @@ class ShortUrl(
     value class ShortId(val value: String)
 
     @JvmInline
-    value class OriginalUrl(val value: URL)
+    value class OriginalUrl(val value: URL) {
+        init {
+            require(value.protocol in listOf("http", "https")) { "Invalid URL: protocol must be HTTP or HTTPS" }
+        }
+    }
 
     object Spec {
         private val chars = ('a'..'z') + ('0'..'9')

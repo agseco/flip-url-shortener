@@ -51,6 +51,16 @@ class ShortUrlTest {
     }
 
     @Test
+    fun `original URL rejects protocols other than HTTP or HTTPS`() {
+        assertThrowsExactly(IllegalArgumentException::class.java) {
+            ShortUrl(
+                id = ShortUrl.Id(12345),
+                originalUrl = ShortUrl.OriginalUrl("ftp://example.com".asUrl())
+            )
+        }
+    }
+
+    @Test
     fun `test equals method`() {
         val originalUrl1 = ShortUrl.OriginalUrl("https://example.com/original1".asUrl())
         val originalUrl2 = ShortUrl.OriginalUrl("https://example.com/original2".asUrl())
