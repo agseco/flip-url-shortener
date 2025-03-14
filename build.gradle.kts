@@ -23,6 +23,9 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("io.ktor:ktor-server-content-negotiation")
     implementation("io.ktor:ktor-serialization-jackson")
+    implementation("org.slf4j:slf4j-api:2.0.17")
+    implementation("ch.qos.logback:logback-core:1.5.17")
+    implementation("ch.qos.logback:logback-classic:1.5.17")
 
     testImplementation(platform("org.junit:junit-bom:$jUnitVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter")
