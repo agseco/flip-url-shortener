@@ -29,7 +29,10 @@ fun Application.shortUrlRoutes(
                 return@get
             }
 
-            call.respond(HttpStatusCode.OK, OriginalUrlResponse(url = found.originalUrl.value))
+            call.respondText(
+                status = HttpStatusCode.MovedPermanently,
+                text = found.originalUrl.value.toString()
+            )
         }
         post("/") {
             val request = call.receive<CreateShortUrlRequest>()
@@ -37,8 +40,8 @@ fun Application.shortUrlRoutes(
                 originalUrl = OriginalUrl(request.url)
             )
             call.respond(
-                HttpStatusCode.OK,
-                ShortUrlResponse(
+                status = HttpStatusCode.OK,
+                message = CreateShortUrlResponse(
                     shortUrl = shortUrl.shortUrl()
                 )
             )
@@ -46,14 +49,10 @@ fun Application.shortUrlRoutes(
     }
 }
 
-data class OriginalUrlResponse(
-    val url: URL
-)
-
 data class CreateShortUrlRequest(
     val url: URL
 )
 
-data class ShortUrlResponse(
+data class CreateShortUrlResponse(
     val shortUrl: URL
 )
