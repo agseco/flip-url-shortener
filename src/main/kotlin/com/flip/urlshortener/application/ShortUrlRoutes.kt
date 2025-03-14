@@ -20,14 +20,16 @@ fun Application.shortUrlRoutes(
             val shortUrl = call.parameters["shortUrl"]
             if (shortUrl == null) {
                 call.respond(HttpStatusCode.BadRequest)
+                return@get
             }
 
-            val found = fetchShortUrl(ShortUrl.ShortId(shortUrl!!))
+            val found = fetchShortUrl(ShortUrl.ShortId(shortUrl))
             if (found == null) {
                 call.respond(HttpStatusCode.NotFound)
+                return@get
             }
 
-            call.respond(HttpStatusCode.OK, OriginalUrlResponse(url = found!!.originalUrl.value))
+            call.respond(HttpStatusCode.OK, OriginalUrlResponse(url = found.originalUrl.value))
         }
         post("/") {
             val request = call.receive<CreateShortUrlRequest>()
